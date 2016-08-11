@@ -15,14 +15,15 @@ class TrackCalamitySpec extends ClairvoyantSpec {
 
       thenICanSeeThatSomebodyAskedForHelp(toEscapeFrom("flood"), at("Santana neighborhood in São Paulo"), requesting("escaping"));
 
-    }.pendingUntilFixed("working in progress")
+    }//.pendingUntilFixed("working in progress")
   }
 }
 
 trait context extends ClairvoyantContext {
 
-  def givenSomebodyAsksForHelp(value: Any, value1: Any, value2: Any): Unit = {
+  val server = new Server();
 
+  def givenSomebodyAsksForHelp(value: Any, value1: Any, value2: Any): Unit = {
   }
 
   def whenIAskToSeeAllTheCalamitiesHappening(now: Date): Unit = {
@@ -46,5 +47,11 @@ trait context extends ClairvoyantContext {
   def toEscapeFrom(calamity: String): Calamity = new Calamity("calamity")
 
   def now : Date = Calendar.getInstance().getTime()
+
+  server.startAndWait();
+
+  override def tearDown(): Unit = {
+    server.stop();
+  }
 
 }
