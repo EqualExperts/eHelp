@@ -1,5 +1,5 @@
 package com.equalexperts.ehelp.ecore
 
-class Calamity(val calamity: String) {
+case class Calamity(problem: String) {
 
 }
