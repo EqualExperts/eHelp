@@ -3,15 +3,25 @@ package com.equalexperts.ehelp.ecore
 import akka.actor.ActorSystem
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.Http.ServerBinding
+import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport._
 import akka.http.scaladsl.model.{ContentTypes, HttpEntity}
 import akka.http.scaladsl.server.Directives._
 import akka.stream.ActorMaterializer
 import com.typesafe.config.ConfigFactory
+import spray.json.DefaultJsonProtocol
 
 import scala.concurrent.duration._
 import scala.concurrent.{Await, Future}
 
-class Server() {
+trait Protocols extends DefaultJsonProtocol {
+
+  implicit val calamityRequestFormat = jsonFormat1(Calamity.apply)
+  implicit val locationRequestFormat = jsonFormat3(Location.apply)
+  implicit val provisionRequestFormat = jsonFormat1(Provision.apply)
+  implicit val situationRequestFormat = jsonFormat3(SituationRequest.apply)
+}
+
+class Server() extends Protocols {
 
   implicit val system = ActorSystem("eCore")
   implicit val materializer = ActorMaterializer()
@@ -20,10 +30,15 @@ class Server() {
   var bindingFuture: Future[ServerBinding] = null;
 
   val route =
-    logRequestResult("akka-http-microservice") {
+    logRequestResult("eCore") {
       path("hello") {
         get {
           complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, "<h1>Say hello to akka-http</h1>"))
+        }
+      } ~
+      pathPrefix("calamity") {
+        (post & entity(as[SituationRequest])) { situationRequest =>
+          complete("")
         }
       }
     }
@@ -42,6 +57,8 @@ class Server() {
   }
 
   def stop(): Unit = {
+    if (bindingFuture == null) return
+
     // see http://doc.akka.io/docs/akka/2.4/scala/http/routing-dsl/index.html - Minimal example
     this.bindingFuture
       .flatMap(_.unbind) // trigger unbinding from the port

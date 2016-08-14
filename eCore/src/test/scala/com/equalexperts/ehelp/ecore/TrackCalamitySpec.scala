@@ -1,12 +1,12 @@
 package com.equalexperts.ehelp.ecore
 
-import java.io.IOException
 import java.util.{Calendar, Date}
 
 import akka.actor.ActorSystem
 import akka.event.{LogSource, Logging}
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.model.HttpMethods.POST
+import akka.http.scaladsl.model.StatusCodes.OK
 import akka.http.scaladsl.model._
 import akka.http.scaladsl.unmarshalling.Unmarshal
 import akka.stream.ActorMaterializer
@@ -20,7 +20,6 @@ class TrackCalamitySpec extends ClairvoyantSpec {
 
   "The eCore" should {
     "track a /calamity when someone asks for help using our services" in new context {
-
       givenSomebodyAsksForHelp(dueTo("flood"), at("Santana neighborhood in São Paulo"), requesting("escaping"))
 
       whenIAskToSeeAllTheCalamitiesHappening(now)
@@ -79,10 +78,8 @@ trait context extends ClairvoyantContext {
     val response: HttpResponse = Await.result(eventualResponse, 1 second)
 
     response match {
-      case HttpResponse(StatusCodes.OK, headers, entity, _) =>
-        log.debug(s"got response, body: ${unmarshal(response)}")
-      case HttpResponse(code, _, _, _) =>
-        log.debug(s"Request failed, response code: ${code}")
+      case HttpResponse(OK, headers, entity, _) => log.debug(s"got response body: \'${unmarshal(response)}\' ")
+      case HttpResponse(code, _, _, _)          => log.debug(s"Request failed, response code: ${code}")
     }
   }
 
@@ -92,8 +89,8 @@ trait context extends ClairvoyantContext {
 
     val response: HttpResponse = Await.result(eventualResponse, 1 second)
     response.status match {
-      case StatusCodes.OK => ???
-      case _ => log.debug(s"request failed with status code ${response.status} and entity ${unmarshal(response)}")
+      case OK => log.debug("POST request succeeded")
+      case _  => log.debug(s"POST request failed with status code \'${response.status}\' and body: \'${unmarshal(response)}\'")
     }
   }
 

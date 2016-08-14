@@ -1,5 +1,3 @@
 package com.equalexperts.ehelp.ecore
 
-case class Provision(needed: String) {
-
-}
+case class Provision(needed: String)

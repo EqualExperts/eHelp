@@ -1,5 +1,3 @@
 package com.equalexperts.ehelp.ecore
 
-case class Calamity(problem: String) {
-
-}
+case class Calamity(problem: String)
