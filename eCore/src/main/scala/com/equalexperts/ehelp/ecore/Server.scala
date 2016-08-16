@@ -1,12 +1,14 @@
 package com.equalexperts.ehelp.ecore
 
-import akka.actor.ActorSystem
+import akka.actor.{ActorSystem, Props}
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.Http.ServerBinding
-import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport._
+import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport._ // Needed for unmarshalling
 import akka.http.scaladsl.model.{ContentTypes, HttpEntity}
 import akka.http.scaladsl.server.Directives._
+import akka.pattern.{AskableActorRef, ask} // needed for actor asks (?)
 import akka.stream.ActorMaterializer
+import akka.util.Timeout
 import com.typesafe.config.ConfigFactory
 import spray.json.DefaultJsonProtocol
 
@@ -27,7 +29,11 @@ class Server() extends Protocols {
   implicit val materializer = ActorMaterializer()
   implicit val executionContext = system.dispatcher // needed for the future flatMap/onComplete in the end
 
+  implicit val timeout: Timeout = Timeout(1 seconds) // needed for actor asks (?)
+
   var bindingFuture: Future[ServerBinding] = null;
+
+  val calamityTracker: AskableActorRef = system.actorOf(Props[CalamityTrackerActor], "calamityTracker")
 
   val route =
     logRequestResult("eCore") {
@@ -38,7 +44,9 @@ class Server() extends Protocols {
       } ~
       pathPrefix("calamity") {
         (post & entity(as[SituationRequest])) { situationRequest =>
-          complete("")
+          complete {
+            (calamityTracker ? situationRequest).mapTo[String]
+          }
         }
       }
     }
