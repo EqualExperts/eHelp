@@ -37,17 +37,19 @@ class Server() extends Protocols {
 
   val route =
     logRequestResult("eCore") {
-      path("hello") {
-        get {
-          complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, "<h1>Say hello to akka-http</h1>"))
-        }
-      } ~
-      pathPrefix("calamity") {
-        (post & entity(as[SituationRequest])) { situationRequest =>
-          complete {
-            (calamityTracker ? situationRequest).mapTo[String]
+      pathPrefix("ecore") {
+        path("calamities") {
+          get {
+            complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, "<h1>Say hello to akka-http</h1>"))
           }
-        }
+        } ~
+          path("calamity") {
+            (post & entity(as[SituationRequest])) { situationRequest =>
+              complete {
+                (calamityTracker ? situationRequest).mapTo[String]
+              }
+            }
+          }
       }
     }
 

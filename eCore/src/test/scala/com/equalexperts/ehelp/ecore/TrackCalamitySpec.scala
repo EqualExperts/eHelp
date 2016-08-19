@@ -47,11 +47,11 @@ trait context extends ClairvoyantContext {
   server.startAndWait()
 
   def givenSomebodyAsksForHelp(calamity: Calamity, location: Location, provision: Provision) {
-    httpPost("http://localhost:9000/calamity", jsonWith(calamity, location, provision))
+    httpPost("http://localhost:9000/ecore/calamity", jsonWith(calamity, location, provision))
   }
 
   def whenIAskToSeeAllTheCalamitiesHappening(when: Date) {
-    httpGet("http://localhost:9000/hello")
+    httpGet("http://localhost:9000/ecore/calamities")
   }
 
   def thenICanSeeThatSomebodyAskedForHelp(calamity: Calamity, location: Location, provision: Provision) {
