@@ -17,10 +17,13 @@ import scala.concurrent.{Await, Future}
 
 trait Protocols extends DefaultJsonProtocol {
 
-  implicit val calamityRequestFormat = jsonFormat1(Calamity.apply)
-  implicit val locationRequestFormat = jsonFormat3(Location.apply)
-  implicit val provisionRequestFormat = jsonFormat1(Provision.apply)
-  implicit val situationRequestFormat = jsonFormat3(SituationRequest.apply)
+  implicit val calamityRequestFormat = jsonFormat1(Calamity)
+  implicit val locationRequestFormat = jsonFormat3(Location)
+  implicit val provisionRequestFormat = jsonFormat1(Provision)
+  implicit val situationRequestFormat = jsonFormat3(SituationRequest)
+
+  implicit val situationFormat = jsonFormat3(Situation)
+  implicit val calamitiesResponseFormat = jsonFormat1(CalamitiesResponseModel)
 }
 
 class Server() extends Protocols {
@@ -40,7 +43,10 @@ class Server() extends Protocols {
       pathPrefix("ecore") {
         path("calamities") {
           get {
-            complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, "<h1>Say hello to akka-http</h1>"))
+            val calamities = List(new Situation(new Calamity("bla"), new Location("bla", "bla", "bla"), new Provision("bla")))
+            complete {
+              new CalamitiesResponseModel(calamities)
+            }
           }
         } ~
           path("calamity") {

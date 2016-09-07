@@ -46,6 +46,8 @@ trait context extends ClairvoyantContext {
   val server = new Server()
   server.startAndWait()
 
+  var calamitiesResponse: CalamitiesResponseModel = _
+
   def givenSomebodyAsksForHelp(calamity: Calamity, location: Location, provision: Provision) {
     httpPost("http://localhost:9000/ecore/calamity", jsonWith(calamity, location, provision))
   }
@@ -78,8 +80,11 @@ trait context extends ClairvoyantContext {
     val response: HttpResponse = Await.result(eventualResponse, 1 second)
 
     response match {
-      case HttpResponse(OK, headers, entity, _) => log.debug(s"got response body: \'${unmarshal(response)}\' ")
-      case HttpResponse(code, _, _, _)          => log.debug(s"Request failed, response code: ${code}")
+      case HttpResponse(OK, headers, entity, _) => {
+        log.debug(s"got response body: \'${unmarshal(response)}\' ")
+        calamitiesResponse = unmarshalToModel(response)
+      }
+      case HttpResponse(status, _, _, _)        => log.debug(s"Request failed, response code: \'${status}\' and body: \'${unmarshal(response)}\'")
     }
   }
 
@@ -95,8 +100,13 @@ trait context extends ClairvoyantContext {
   }
 
   private def unmarshal(response: HttpResponse): String = {
-    val eventualString: Future[String] = Unmarshal(response.entity).to[String]
-    Await.result(eventualString, 1 micro)
+    val eventualResponse: Future[String] = Unmarshal(response.entity).to[String]
+    Await.result(eventualResponse, 1 micro)
+  }
+
+  private def unmarshalToModel(response: HttpResponse): CalamitiesResponseModel = {
+    val eventualResponse = Unmarshal(response.entity).to[CalamitiesResponseModel]
+    Await.result(eventualResponse, 1 micro)
   }
 
   private def jsonWith(calamity: Calamity, location: Location, provision: Provision): String = {
