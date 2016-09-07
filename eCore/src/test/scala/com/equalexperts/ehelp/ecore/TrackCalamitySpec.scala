@@ -5,6 +5,7 @@ import java.util.{Calendar, Date}
 import akka.actor.ActorSystem
 import akka.event.{LogSource, Logging}
 import akka.http.scaladsl.Http
+import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport._ // Needed for unmarshalling
 import akka.http.scaladsl.model.HttpMethods.POST
 import akka.http.scaladsl.model.StatusCodes.OK
 import akka.http.scaladsl.model._
@@ -12,6 +13,7 @@ import akka.http.scaladsl.unmarshalling.Unmarshal
 import akka.stream.ActorMaterializer
 import akka.util.ByteString
 import clairvoyance.specs2.{ClairvoyantContext, ClairvoyantSpec}
+import org.specs2.matcher._
 
 import scala.concurrent.duration._
 import scala.concurrent.{Await, Future}
@@ -30,7 +32,7 @@ class TrackCalamitySpec extends ClairvoyantSpec {
   }
 }
 
-trait context extends ClairvoyantContext {
+trait context extends ClairvoyantContext with EnablesSupportForSpecs2MatchersInsideClairvoyantContext with Protocols {
 
   implicit val system = ActorSystem("eCore")
   implicit val materializer = ActorMaterializer()
@@ -57,6 +59,11 @@ trait context extends ClairvoyantContext {
   }
 
   def thenICanSeeThatSomebodyAskedForHelp(calamity: Calamity, location: Location, provision: Provision) {
+    // Note: Another option is to use Specs2 matching case classes support. More about it here => https://etorreborre.github.io/specs2/guide/SPECS2-3.8.4/org.specs2.guide.Matchers.html#optional
+
+    val situations: List[Situation] = calamitiesResponse.situations
+
+    situations must have size(1)
   }
 
   def dueTo(calamity: String): Calamity = Calamity(calamity)
@@ -73,9 +80,9 @@ trait context extends ClairvoyantContext {
 
   def now : Date = Calendar.getInstance().getTime
 
-  override def tearDown(): Unit = server.stop()
+  override def tearDown() = server.stop()
 
-  private def httpGet(path: String) : Unit = {
+  private def httpGet(path: String) = {
     val eventualResponse: Future[HttpResponse] = Http().singleRequest(HttpRequest(uri = path))
     val response: HttpResponse = Await.result(eventualResponse, 1 second)
 
@@ -88,7 +95,7 @@ trait context extends ClairvoyantContext {
     }
   }
 
-  private def httpPost(path: String, json: String): Unit = {
+  private def httpPost(path: String, json: String) {
     val postRequest = HttpRequest(POST, path, entity = HttpEntity(MediaTypes.`application/json`, ByteString(json)))
     val eventualResponse: Future[HttpResponse] = Http().singleRequest(postRequest)
 
@@ -128,3 +135,6 @@ trait context extends ClairvoyantContext {
   }
 
 }
+
+trait EnablesSupportForSpecs2MatchersInsideClairvoyantContext extends Matchers with MustExpectations with MustThrownExpectations with ShouldExpectations with ShouldThrownExpectations
+

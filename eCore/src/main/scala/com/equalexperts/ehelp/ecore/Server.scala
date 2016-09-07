@@ -60,16 +60,16 @@ class Server() extends Protocols {
     }
 
   def start(): Unit = {
-    val config = ConfigFactory.load();
+    val config = ConfigFactory.load()
 
     this.bindingFuture = Http().bindAndHandle(route, config.getString("http.interface"), config.getInt("http.port"))
   }
 
   def startAndWait(): Unit = {
-    val config = ConfigFactory.load();
+    val config = ConfigFactory.load()
 
     this.bindingFuture = Http().bindAndHandle(route, config.getString("http.interface"), config.getInt("http.port"))
-    Await.result(bindingFuture, 5000 millis);
+    Await.result(bindingFuture, 5000 millis)
   }
 
   def stop(): Unit = {
