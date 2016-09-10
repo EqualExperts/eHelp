@@ -1,4 +1,4 @@
-# eCore [![Apache 2.0 License](https://img.shields.io/badge/license-Apache_2.0-blue.svg)](https://github.com/EqualExperts/eHelp/blob/master/eCore/LICENSE)
+# eCore
 
 Provide Service so Someone Can Flag a Problem Somewhere
 
