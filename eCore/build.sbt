@@ -1,5 +1,3 @@
-enablePlugins(JavaAppPackaging)
-
 name := """eCore"""
 version := "1.0"
 organization := "EqualExperts - Lisbon"
