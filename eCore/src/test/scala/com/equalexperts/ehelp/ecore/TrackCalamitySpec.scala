@@ -28,7 +28,7 @@ class TrackCalamitySpec extends ClairvoyantSpec {
 
       thenICanSeeThatSomebodyAskedForHelp(toEscapeFrom("flood"), at("Santana neighborhood in São Paulo"), requesting("escaping"))
 
-    }.pendingUntilFixed("working in progress")
+    }
   }
 }
 
@@ -58,12 +58,15 @@ trait context extends ClairvoyantContext with EnablesSupportForSpecs2MatchersIns
     httpGet("http://localhost:9000/ecore/calamities")
   }
 
-  def thenICanSeeThatSomebodyAskedForHelp(calamity: Calamity, location: Location, provision: Provision) {
-    // Note: Another option is to use Specs2 matching case classes support. More about it here => https://etorreborre.github.io/specs2/guide/SPECS2-3.8.4/org.specs2.guide.Matchers.html#optional
-
+  def thenICanSeeThatSomebodyAskedForHelp(expectedCalamity: Calamity, expectedLocation: Location, expectedProvision: Provision) {
     val situations: List[Situation] = calamitiesResponse.situations
-
     situations must have size(1)
+
+    val theSituation: Situation = situations.head
+    // Note: Another option is to use Specs2 matching case classes support. More about it here => https://etorreborre.github.io/specs2/guide/SPECS2-3.8.4/org.specs2.guide.Matchers.html#optional
+    theSituation.calamity must beEqualTo(expectedCalamity)
+    theSituation.location must beEqualTo(expectedLocation)
+    theSituation.provision must beEqualTo(expectedProvision)
   }
 
   def dueTo(calamity: String): Calamity = Calamity(calamity)

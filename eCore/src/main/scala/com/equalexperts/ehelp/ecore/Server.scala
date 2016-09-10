@@ -4,7 +4,6 @@ import akka.actor.{ActorSystem, Props}
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.Http.ServerBinding
 import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport._ // Needed for unmarshalling
-import akka.http.scaladsl.model.{ContentTypes, HttpEntity}
 import akka.http.scaladsl.server.Directives._
 import akka.pattern.{AskableActorRef, ask} // needed for actor asks (?)
 import akka.stream.ActorMaterializer
@@ -34,7 +33,7 @@ class Server() extends Protocols {
 
   implicit val timeout: Timeout = Timeout(1 seconds) // needed for actor asks (?)
 
-  var bindingFuture: Future[ServerBinding] = null;
+  var bindingFuture: Future[ServerBinding] = _
 
   val calamityTracker: AskableActorRef = system.actorOf(Props[CalamityTrackerActor], "calamityTracker")
 
@@ -43,9 +42,9 @@ class Server() extends Protocols {
       pathPrefix("ecore") {
         path("calamities") {
           get {
-            val calamities = List(new Situation(new Calamity("bla"), new Location("bla", "bla", "bla"), new Provision("bla")))
+            val calamities = List(Situation(Calamity("flood"), Location("-23.499648", "-46.628493", "Santana neighborhood in São Paulo"), Provision("escaping")))
             complete {
-              new CalamitiesResponseModel(calamities)
+              CalamitiesResponseModel(calamities)
             }
           }
         } ~
