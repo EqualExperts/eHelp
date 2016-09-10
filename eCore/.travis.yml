@@ -1,0 +1,13 @@
+language: scala
+scala: 2.11.7
+jdk: oraclejdk8
+
+cache:
+  directories:
+    - $HOME/.ivy2/cache
+    - $HOME/.sbt/boot/
+
+notifications:
+    on_success: change
+    on_failure: always
+    on_start:   never
