@@ -1,8 +1,10 @@
-Portugal - Building microservices so we can test the system, document specs and the exchange of messages between them.
-
 # eHelp [![Build Status](https://travis-ci.org/EqualExperts/eHelp.svg?branch=master)](https://travis-ci.org/EqualExperts/eHelp) [![Apache 2.0 License](https://img.shields.io/badge/license-Apache_2.0-blue.svg)](https://github.com/EqualExperts/eHelp/blob/master/LICENSE.txt)
 
-Provide Service so Someone Can Flag a Problem Somewhere
+From a domain perspective, the idea is to enable Someone to Flag a Problem Somewhere and Ask for Help.
+
+From a technical point of view, we are building microservices so we can test the whole system, document specs and the exchange of messages between them.
+
+Api specs are available [here](https://equalexperts.github.io/eHelp/).
 
 ## Running the Application
 
