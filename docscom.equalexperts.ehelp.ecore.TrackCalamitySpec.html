@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html><head>
+      <title>TrackCalamitySpec</title>
+      <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js" type="text/javascript"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.7/jquery-ui.min.js" type="text/javascript"></script>
+
+      <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.7/themes/base/jquery-ui.css" type="text/css" media="all" />
+      <link rel="stylesheet" href="http://static.jquery.com/ui/css/demo-docs-theme/ui.theme.css" type="text/css" media="all" />
+      <link rel="stylesheet" href="css/yatspec.css" type="text/css" media="all" />
+
+      <script src="javascript/xregexp.js" type="text/javascript"></script>
+      <script src="javascript/yatspec.js" type="text/javascript"></script>
+      <script src="javascript/sequence_diagram.js" type="text/javascript"></script>
+      <script type="text/javascript">
+function toggleDetails(contentId, linkId) {
+  var content  = document.getElementById(contentId);
+  var linkText = document.getElementById(linkId);
+  if (content.style.display == "block") {
+    content.style.display = "none";
+    linkText.innerHTML = "[ show stacktrace ]";
+  } else {
+    content.style.display = "block";
+    linkText.innerHTML = "[ hide stacktrace ]";
+  }
+}
+
+function hideOpenInNewTabIfRequired() {
+  if (top === self) { document.getElementById('printlink').style.display = 'none'; }
+}
+</script>
+    </head><body>
+      <div id="container">
+        <h1><a href="index.html">Specs</a> / Track Calamity Spec</h1>
+        <ul class="contents"><li class="test-passed">
+              <a href="#tracka/calamitywhensomeoneasksforhelpusingourservices">The eCore should track a /calamity when someone asks for help using our services</a>
+            </li></ul>
+        <ul>
+      <span></span>
+    </ul><ul>
+      <span></span>
+    </ul><ul>
+      <span></span>
+    </ul><ul>
+      <text><h1><a name="the-ecore-should" href="#the-ecore-should">The eCore should</a></h1></text>
+    </ul><ul>
+      <span></span>
+    </ul><ul>
+      <a id="tracka/calamitywhensomeoneasksforhelpusingourservices"></a><div class="testmethod">
+            <text><h2><a name="track-a-calamity-when-someone-asks-for-help-using-our-services" href="#track-a-calamity-when-someone-asks-for-help-using-our-services">track a /calamity when someone asks for help using our services</a></h2></text>
+            <div class="scenario" id="64884769">
+              <h2>Specification</h2>
+              <pre class="highlight specification">givenSomebodyAsksForHelp(dueTo(&quot;flood&quot;), at(&quot;Santana neighborhood in São Paulo&quot;), requesting(&quot;escaping&quot;))
+
+whenIAskToSeeAllTheCalamitiesHappening(now)
+
+thenICanSeeThatSomebodyAskedForHelp(toEscapeFrom(&quot;flood&quot;), at(&quot;Santana neighborhood in São Paulo&quot;), requesting(&quot;escaping&quot;))
+</pre>
+              <h2>Test results:</h2>
+              <pre class="highlight results test-passed highlighted">Test Passed in 2 seconds, 779 ms</pre>
+              
+              
+            </div>
+          </div>
+    </ul><ul>
+      <span></span>
+    </ul><ul>
+      <span></span>
+    </ul><ul>
+      <span></span>
+    </ul>
+      </div>
+    </body></html>

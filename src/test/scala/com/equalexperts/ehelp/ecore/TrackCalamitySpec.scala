@@ -1,11 +1,12 @@
 package com.equalexperts.ehelp.ecore
 
+import java.io.File
 import java.util.{Calendar, Date}
 
 import akka.actor.ActorSystem
 import akka.event.{LogSource, Logging}
 import akka.http.scaladsl.Http
-import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport._ // Needed for unmarshalling
+import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport._
 import akka.http.scaladsl.model.HttpMethods.POST
 import akka.http.scaladsl.model.StatusCodes.OK
 import akka.http.scaladsl.model._
@@ -17,6 +18,9 @@ import org.specs2.matcher._
 
 import scala.concurrent.duration._
 import scala.concurrent.{Await, Future}
+import scala.util.Properties
+
+import java.io.File.{separator}
 
 class TrackCalamitySpec extends ClairvoyantSpec {
 
@@ -33,6 +37,9 @@ class TrackCalamitySpec extends ClairvoyantSpec {
 }
 
 trait context extends ClairvoyantContext with EnablesSupportForSpecs2MatchersInsideClairvoyantContext with Protocols {
+
+  Properties.setProp("specs2.outDir", s"docs$separator");
+  println("specs2.outDir" + Properties.propOrNone("specs2.outDir"));
 
   implicit val system = ActorSystem("eCore")
   implicit val materializer = ActorMaterializer()
