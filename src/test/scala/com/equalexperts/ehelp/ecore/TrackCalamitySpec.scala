@@ -1,6 +1,5 @@
 package com.equalexperts.ehelp.ecore
 
-import java.io.File
 import java.util.{Calendar, Date}
 
 import akka.actor.ActorSystem
@@ -13,14 +12,11 @@ import akka.http.scaladsl.model._
 import akka.http.scaladsl.unmarshalling.Unmarshal
 import akka.stream.ActorMaterializer
 import akka.util.ByteString
-import clairvoyance.specs2.{ClairvoyantContext, ClairvoyantSpec}
-import org.specs2.matcher._
+import clairvoyance.specs2.ClairvoyantSpec
+import com.equalexperts.ehelp.ecore.support.ECoreSpecsContext
 
 import scala.concurrent.duration._
 import scala.concurrent.{Await, Future}
-import scala.util.Properties
-
-import java.io.File.{separator}
 
 class TrackCalamitySpec extends ClairvoyantSpec {
 
@@ -31,15 +27,11 @@ class TrackCalamitySpec extends ClairvoyantSpec {
       whenIAskToSeeAllTheCalamitiesHappening(now)
 
       thenICanSeeThatSomebodyAskedForHelp(toEscapeFrom("flood"), at("Santana neighborhood in São Paulo"), requesting("escaping"))
-
     }
   }
 }
 
-trait context extends ClairvoyantContext with EnablesSupportForSpecs2MatchersInsideClairvoyantContext with Protocols {
-
-  Properties.setProp("specs2.outDir", s"docs$separator");
-  println("specs2.outDir" + Properties.propOrNone("specs2.outDir"));
+trait context extends ECoreSpecsContext with Protocols {
 
   implicit val system = ActorSystem("eCore")
   implicit val materializer = ActorMaterializer()
@@ -145,6 +137,4 @@ trait context extends ClairvoyantContext with EnablesSupportForSpecs2MatchersIns
   }
 
 }
-
-trait EnablesSupportForSpecs2MatchersInsideClairvoyantContext extends Matchers with MustExpectations with MustThrownExpectations with ShouldExpectations with ShouldThrownExpectations
 
