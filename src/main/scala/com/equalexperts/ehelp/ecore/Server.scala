@@ -13,6 +13,7 @@ import spray.json.DefaultJsonProtocol
 
 import scala.concurrent.duration._
 import scala.concurrent.{Await, Future}
+import scala.language.{implicitConversions, postfixOps}
 
 trait Protocols extends DefaultJsonProtocol {
 

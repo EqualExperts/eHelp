@@ -17,6 +17,8 @@ import com.equalexperts.ehelp.ecore.support.ECoreSpecsContext
 
 import scala.concurrent.duration._
 import scala.concurrent.{Await, Future}
+import scala.language.implicitConversions
+//import scala.language.postfixOps There's a ambiguity when importing postfixOps
 
 class TrackCalamitySpec extends ClairvoyantSpec {
 
@@ -59,7 +61,7 @@ trait context extends ECoreSpecsContext with Protocols {
 
   def thenICanSeeThatSomebodyAskedForHelp(expectedCalamity: Calamity, expectedLocation: Location, expectedProvision: Provision) {
     val situations: List[Situation] = calamitiesResponse.situations
-    situations must have size(1)
+    situations must have size 1
 
     val theSituation: Situation = situations.head
     // Note: Another option is to use Specs2 matching case classes support. More about it here => https://etorreborre.github.io/specs2/guide/SPECS2-3.8.4/org.specs2.guide.Matchers.html#optional
@@ -91,12 +93,12 @@ trait context extends ECoreSpecsContext with Protocols {
     val response: HttpResponse = Await.result(eventualResponse, 1 second)
 
     response match {
-      case HttpResponse(OK, headers, entity, _) => {
+      case HttpResponse(OK, headers, entity, _) =>
         log.debug(s"got response body: \'${unmarshal(response)}\' ")
         calamitiesResponse = unmarshalToModel(response)
         captureValue("Response from eHelp to Client" -> response)
-      }
-      case HttpResponse(status, _, _, _)        => log.debug(s"Request failed, response code: \'${status}\' and body: \'${unmarshal(response)}\'")
+
+      case HttpResponse(status, _, _, _) => log.debug(s"Request failed, response code: $status and body: ${unmarshal(response)}")
     }
   }
 
