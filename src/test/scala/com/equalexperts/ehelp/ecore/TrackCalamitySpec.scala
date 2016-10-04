@@ -84,14 +84,17 @@ trait context extends ECoreSpecsContext with Protocols {
 
   override def tearDown() = server.stop()
 
-  private def httpGet(path: String) = {
-    val eventualResponse: Future[HttpResponse] = Http().singleRequest(HttpRequest(uri = path))
+  private def httpGet(uri: String) = {
+    captureValue("Request from Client to eHelp" -> uri)
+
+    val eventualResponse: Future[HttpResponse] = Http().singleRequest(HttpRequest(uri = uri))
     val response: HttpResponse = Await.result(eventualResponse, 1 second)
 
     response match {
       case HttpResponse(OK, headers, entity, _) => {
         log.debug(s"got response body: \'${unmarshal(response)}\' ")
         calamitiesResponse = unmarshalToModel(response)
+        captureValue("Response from eHelp to Client" -> response)
       }
       case HttpResponse(status, _, _, _)        => log.debug(s"Request failed, response code: \'${status}\' and body: \'${unmarshal(response)}\'")
     }

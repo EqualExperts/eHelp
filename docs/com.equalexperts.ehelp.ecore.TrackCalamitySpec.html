@@ -49,17 +49,31 @@ function hideOpenInNewTabIfRequired() {
     </ul><ul>
       <a id="tracka/calamitywhensomeoneasksforhelpusingourservices"></a><div class="testmethod">
             <text><h2><a name="track-a-calamity-when-someone-asks-for-help-using-our-services" href="#track-a-calamity-when-someone-asks-for-help-using-our-services">track a /calamity when someone asks for help using our services</a></h2></text>
-            <div class="scenario" id="388531668">
+            <div class="scenario" id="1334903076">
               <h2>Specification</h2>
-              <pre class="highlight specification">givenSomebodyAsksForHelp(dueTo(&quot;flood&quot;), at(&quot;Santana neighborhood in SÃ£o Paulo&quot;), requesting(&quot;escaping&quot;))
+              <pre class="highlight specification">givenSomebodyAsksForHelp(dueTo(&quot;flood&quot;), at(&quot;Santana neighborhood in São Paulo&quot;), requesting(&quot;escaping&quot;))
 
 whenIAskToSeeAllTheCalamitiesHappening(now)
 
-thenICanSeeThatSomebodyAskedForHelp(toEscapeFrom(&quot;flood&quot;), at(&quot;Santana neighborhood in SÃ£o Paulo&quot;), requesting(&quot;escaping&quot;))</pre>
+thenICanSeeThatSomebodyAskedForHelp(toEscapeFrom(&quot;flood&quot;), at(&quot;Santana neighborhood in São Paulo&quot;), requesting(&quot;escaping&quot;))</pre>
               <h2>Test results:</h2>
-              <pre class="highlight results test-passed highlighted">Test Passed in 3 seconds, 122 ms</pre>
+              <pre class="highlight results test-passed highlighted">Test Passed in 2 seconds, 751 ms</pre>
               
-              
+              <h3 class="logKey" logkey="0">Request from Client to eHelp</h3><div class="logValue highlight monospace String"><span>http://localhost:9000/ecore/calamities</span></div><h3 class="logKey" logkey="1">Response from eHelp to Client</h3><div class="logValue highlight monospace HttpResponse"><span>HttpResponse(200 OK,List(Server: akka-http/2.4.8, Date: Tue, 04 Oct 2016 21:15:25 GMT),HttpEntity.Strict(application/json,{
+  &quot;situations&quot;: [{
+    &quot;calamity&quot;: {
+      &quot;problem&quot;: &quot;flood&quot;
+    },
+    &quot;location&quot;: {
+      &quot;latitude&quot;: &quot;-23.499648&quot;,
+      &quot;longitude&quot;: &quot;-46.628493&quot;,
+      &quot;description&quot;: &quot;Santana neighborhood in São Paulo&quot;
+    },
+    &quot;provision&quot;: {
+      &quot;needed&quot;: &quot;escaping&quot;
+    }
+  }]
+}),HttpProtocol(HTTP/1.1))</span></div><h3 class="logKey" logkey="2">Sequence Diagram</h3><div class="logValue highlight monospace SvgSequenceDiagram"><div class="nohighlight"><svg width="149px" viewBox="0 0 149 159" version="1.1" style="width:149px;height:159px;" height="159px" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg"><defs><filter y="-1" x="-1" width="300%" id="fu7rzm7" height="300%"><feGaussianBlur stdDeviation="2.0" result="blurOut"></feGaussianBlur><feColorMatrix values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0" type="matrix" result="blurOut2" in="blurOut"></feColorMatrix><feOffset result="blurOut3" in="blurOut2" dy="4.0" dx="4.0"></feOffset><feBlend mode="normal" in2="blurOut3" in="SourceGraphic"></feBlend></filter></defs><g><line y2="120.3125" y1="39.6094" x2="35" x1="35" style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 5.0,5.0;"></line><line y2="120.3125" y1="39.6094" x2="117" x1="117" style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 5.0,5.0;"></line><rect y="3" x="8" width="50" style="stroke: #A80036; stroke-width: 1.5;" height="31.6094" filter="url(#fu7rzm7)" fill="#FEFECE"></rect><text y="24.5332" x="15" textLength="36" lengthAdjust="spacingAndGlyphs" font-size="14" font-family="sans-serif" fill="#000000">Client</text><rect y="119.3125" x="8" width="50" style="stroke: #A80036; stroke-width: 1.5;" height="31.6094" filter="url(#fu7rzm7)" fill="#FEFECE"></rect><text y="140.8457" x="15" textLength="36" lengthAdjust="spacingAndGlyphs" font-size="14" font-family="sans-serif" fill="#000000">Client</text><rect y="3" x="90" width="50" style="stroke: #A80036; stroke-width: 1.5;" height="31.6094" filter="url(#fu7rzm7)" fill="#FEFECE"></rect><text y="24.5332" x="97" textLength="36" lengthAdjust="spacingAndGlyphs" font-size="14" font-family="sans-serif" fill="#000000">eHelp</text><rect y="119.3125" x="90" width="50" style="stroke: #A80036; stroke-width: 1.5;" height="31.6094" filter="url(#fu7rzm7)" fill="#FEFECE"></rect><text y="140.8457" x="97" textLength="36" lengthAdjust="spacingAndGlyphs" font-size="14" font-family="sans-serif" fill="#000000">eHelp</text><line y2="67.6094" y1="71.6094" x2="105" x1="115" style="stroke: #A80036; stroke-width: 1.0;"></line><line y2="75.6094" y1="71.6094" x2="105" x1="115" style="stroke: #A80036; stroke-width: 1.0;"></line><line y2="71.6094" y1="71.6094" x2="116" x1="35" style="stroke: #A80036; stroke-width: 1.0;"></line><text y="67.1045" x="42" textLength="48" sequence_diagram_message_id="0" lengthAdjust="spacingAndGlyphs" font-size="13" font-family="sans-serif" fill="#000000" class="sequence_diagram_clickable">Request</text><line y2="97.9609" y1="101.9609" x2="45" x1="35" style="stroke: #A80036; stroke-width: 1.0;"></line><line y2="105.9609" y1="101.9609" x2="45" x1="35" style="stroke: #A80036; stroke-width: 1.0;"></line><line y2="101.9609" y1="101.9609" x2="116" x1="35" style="stroke: #A80036; stroke-width: 1.0;"></line><text y="97.4561" x="52" textLength="58" sequence_diagram_message_id="1" lengthAdjust="spacingAndGlyphs" font-size="13" font-family="sans-serif" fill="#000000" class="sequence_diagram_clickable">Response</text></g></svg></div></div>
             </div>
           </div>
     </ul><ul>
