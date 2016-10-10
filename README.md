@@ -20,16 +20,21 @@ Check <a href="http://www.scala-sbt.org/release/tutorial/Running.html">this</a> 
 
 ## Running the Application
 
-Run the app without it being packaged with [Native packager](http://www.scala-sbt.org/sbt-native-packager/gettingstarted.html):
+Run the app without it being packaged using [Native packager](http://www.scala-sbt.org/sbt-native-packager/gettingstarted.html):
 
    ```
    sbt stage
    ./target/universal/stage/bin/ehelp
    ```
 
-Or starts eHelp with:
+Or starts eHelp (with 'prod' profile enabled):
 
     $ heroku local web
+    
+## Environment Variables & System Properties
+
+* $PORT is mandatory when running in "prod" profile.
+* -Dprofile defines the targeted environment. It defaults to "dev", but can be set to "prod".
 
 # Guidelines
 
