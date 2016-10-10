@@ -6,17 +6,30 @@ From a technical point of view, we are building microservices so we can test the
 
 Api specs are available [here](https://equalexperts.github.io/eHelp/).
 
-## Running the Application
+## Building the Application
 
-Build with:
+Build it with:
 
     sbt compile
+    
+Test it with:
 
-Then starts eCore with:
+    sbt test
 
-    $ heroku local web [... are we really going to use Heroku? ...]
+Check <a href="http://www.scala-sbt.org/release/tutorial/Running.html">this</a> out to see more sbt commands.
 
-Check <a href="http://www.scala-sbt.org/release/tutorial/Running.html">this</a> out to see the most common sbt commands.
+## Running the Application
+
+Run the app without it being packaged with [Native packager](http://www.scala-sbt.org/sbt-native-packager/gettingstarted.html):
+
+   ```
+   sbt stage
+   ./target/universal/stage/bin/ehelp
+   ```
+
+Or starts eHelp with:
+
+    $ heroku local web
 
 # Guidelines
 

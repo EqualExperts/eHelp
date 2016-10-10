@@ -4,10 +4,18 @@ jdk: oraclejdk8
 
 cache:
   directories:
-    - $HOME/.ivy2/cache
-    - $HOME/.sbt/boot/
+  - "$HOME/.ivy2/cache"
+  - "$HOME/.sbt/boot/"
 
 notifications:
-    on_success: change
-    on_failure: always
-    on_start:   never
+  on_success: change
+  on_failure: always
+  on_start: never
+
+deploy:
+  provider: heroku
+  api_key:
+    secure: e1PZ4BGUW/VQIyArf+jKFs9fFNHcAWSeR5d7BiGi/mCiIak3WKfqsb1kcB7kB8C/WpQ59CPsqnec1WHLBCQ+pih6/lx6t2SURDenH8YzqrRaX8hw3spgjfazrXVDIvZworUjVbCy3wZmURIYAsjEWjzrGMqJfdzk0rGbPQUkZCx7BjoyglD1xgeetNskTuEyyPldDd8HldYwxjtFrHzAXna6e9VPGWB90+/4rdu+FjvegjmFqh+l8hzURtxeHWp1oy1BMb9uk4xwkNqjifeEyn/PN4OyN6Be83pPOPEHKpCXsYTjp9G8FX0rJh8asCq+DDKQ0BtFGJvFlCvcXyJbufTRe/5oLzkyshKe46DqBm53y/G09o+CesHU83Q8BxhMKSl5J5ejgQnDp5QSuy/DPQ2zKVlZBfoFcrU4hnx6tz0eOsnYn2t8zHbbPov5MKUCW6qtWOBXF7AJbRpVRRROXcnBkpoUR0x0WnhedO7gzLgmEHl4bvGH+grTCABon4Pslsf3bGfMfHbkcjGLV7iJ7KFRWrsFFJLNCBsXkfd0Rxr1d+LQgPU+Ql7nZm6yyDNGpTK3FfWg8Xl8cQtJT/5F48sAIyuuQRKYjMWVZv7EMZHjh3M+eyTSYTmKYmEhjuHZSHgw5/tV1hNFyl+aa5sLZBCEqZMjvllwH9nleT2vAt4=
+  app: ehelp-core
+  on:
+    repo: EqualExperts/eHelp

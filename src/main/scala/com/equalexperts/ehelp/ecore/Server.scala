@@ -60,13 +60,15 @@ class Server() extends Protocols {
     }
 
   def start(): Unit = {
-    val config = ConfigFactory.load()
+    val env = System.getProperty("profile")
+    val config = if (env == "prod") ConfigFactory.load(env) else ConfigFactory.load()
 
     this.bindingFuture = Http().bindAndHandle(route, config.getString("http.interface"), config.getInt("http.port"))
   }
 
   def startAndWait(): Unit = {
-    val config = ConfigFactory.load()
+    val env = System.getProperty("profile")
+    val config = if (env == "prod") ConfigFactory.load(env) else ConfigFactory.load()
 
     this.bindingFuture = Http().bindAndHandle(route, config.getString("http.interface"), config.getInt("http.port"))
     Await.result(bindingFuture, 5000 millis)
